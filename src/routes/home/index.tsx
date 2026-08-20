@@ -1,6 +1,12 @@
 import { useState, useCallback } from "react";
 
-import { FaGithub, FaPlus, FaCircleNotch } from "react-icons/fa";
+import {
+  FaGithub,
+  FaPlus,
+  FaCircleNotch,
+  FaBars,
+  FaTrash,
+} from "react-icons/fa";
 
 import api from "../../services/api";
 import type { Repository } from "../../types/Repositories";
@@ -38,6 +44,11 @@ export default function Home() {
     },
     [newRepo],
   );
+
+  function handleRemoveRepository(name: string) {
+    const find = repositories.filter((r) => r.name !== name);
+    setRepositories(find);
+  }
   return (
     <div className="max-w-175 mx-auto my-20  p-4 bg-white rounded-lg shadow-md">
       <div className="flex gap-4 justify-center items-center my-4">
@@ -65,6 +76,26 @@ export default function Home() {
           )}
         </button>
       </form>
+      <ul className="list-none mt-6">
+        {repositories.map((repository) => (
+          <li
+            key={repository.name}
+            className="py-4 flex flex-row justify-between items-center border-b border-[#eee]"
+          >
+            <span className="flex gap-2 items-center">
+              <FaTrash
+                size={16}
+                className="text-[#0D2636] cursor-pointer"
+                onClick={() => handleRemoveRepository(repository.name)}
+              />
+              <a className="text-[#0D2636]" href="#">
+                {repository.name}
+              </a>
+            </span>
+            <FaBars size={24} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
