@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-
+import clsx from "clsx";
 import {
   FaGithub,
   FaPlus,
@@ -15,7 +15,7 @@ export default function Home() {
   const [newRepo, setNewRepo] = useState("");
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(false);
-
+  const [err, setErr] = useState(false);
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNewRepo(e.target.value);
   }
@@ -23,10 +23,22 @@ export default function Home() {
     (e: React.SubmitEvent<HTMLFormElement>) => {
       e.preventDefault();
 
+      if (!newRepo.trim()) return;
+
       async function addRepository() {
         setLoading(true);
+        setErr(false);
+
         try {
           const response = await api.get(`repos/${newRepo}`);
+
+          const hasRepo = repositories.find(
+            (r) => r.name === response.data.full_name,
+          );
+
+          if (hasRepo) {
+            throw new Error("Repositório já existe na sua lista");
+          }
 
           const data: Repository = {
             name: response.data.full_name,
@@ -34,6 +46,7 @@ export default function Home() {
           console.log(data);
           setRepositories((prev) => [...prev, data]);
         } catch (error) {
+          setErr(true);
           console.log(error);
         } finally {
           setLoading(false);
@@ -42,7 +55,7 @@ export default function Home() {
 
       addRepository();
     },
-    [newRepo],
+    [newRepo, repositories],
   );
 
   function handleRemoveRepository(name: string) {
@@ -58,7 +71,10 @@ export default function Home() {
 
       <form onSubmit={handleAddRepository} className="mt-8 flex gap-4 flex-row">
         <input
-          className="flex-1 border border-[#ddd] py-3 px-4 rounded-sm text-base"
+          className={clsx(
+            `flex-1 border  py-3 px-4 rounded-sm text-base
+            ${err ? "border-[#ff0000]" : "border-[#ddd]"}`,
+          )}
           type="text"
           placeholder="Adicionar Repositorios"
           value={newRepo}
