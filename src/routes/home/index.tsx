@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import clsx from "clsx";
 import {
   FaGithub,
@@ -13,9 +13,20 @@ import type { Repository } from "../../types/Repositories";
 
 export default function Home() {
   const [newRepo, setNewRepo] = useState("");
-  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>(() => {
+    const savedRepositories = localStorage.getItem("repos");
+
+    return savedRepositories ? JSON.parse(savedRepositories) : [];
+  });
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(false);
+
+  useEffect(() => {
+    if (repositories.length > 0) {
+      localStorage.setItem("repos", JSON.stringify(repositories));
+    }
+  }, [repositories]);
+
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNewRepo(e.target.value);
   }
