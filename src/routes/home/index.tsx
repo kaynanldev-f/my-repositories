@@ -8,6 +8,7 @@ import {
   FaTrash,
 } from "react-icons/fa";
 
+import { Link } from "react-router-dom";
 import api from "../../services/api";
 import type { Repository } from "../../types/Repositories";
 
@@ -22,9 +23,7 @@ export default function Home() {
   const [err, setErr] = useState(false);
 
   useEffect(() => {
-    if (repositories.length > 0) {
-      localStorage.setItem("repos", JSON.stringify(repositories));
-    }
+    localStorage.setItem("repos", JSON.stringify(repositories));
   }, [repositories]);
 
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -115,9 +114,9 @@ export default function Home() {
                 className="text-[#0D2636] cursor-pointer"
                 onClick={() => handleRemoveRepository(repository.name)}
               />
-              <a className="text-[#0D2636]" href="#">
+              <Link to={`/repository/${encodeURIComponent(repository.name)}`}>
                 {repository.name}
-              </a>
+              </Link>
             </span>
             <FaBars size={24} />
           </li>
