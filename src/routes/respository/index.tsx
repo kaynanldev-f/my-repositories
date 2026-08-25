@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import api from "../../services/api";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { FaCircleNotch } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import type { RepositoryDetailsType } from "../../types/Repositories";
 export default function Repository() {
   const [repositorio, setRepositorio] = useState<RepositoryDetailsType>();
@@ -42,8 +43,8 @@ export default function Repository() {
   }
 
   return (
-    <div className="max-w-full flex flex-col items-center justify-center">
-      <div className="rounded-lg bg-[#eee] max-w-[640px] w-full p-10 flex flex-col items-center justify-center">
+    <div className="max-w-full flex flex-col items-center justify-center py-20">
+      <div className="relative rounded-lg bg-[#eee] max-w-[640px] w-full p-10 flex flex-col items-center justify-center">
         <img
           src={repositorio.owner.avatar_url || ""}
           alt={repositorio.description}
@@ -55,6 +56,9 @@ export default function Repository() {
         <p className="text-base text-center mt-4 max-w-3/4 text-[#0D2636]">
           {repositorio.description}
         </p>
+        <Link to={"/"} className="absolute top-4 left-4">
+          <FaArrowLeft size={16} color="#0D2636" />
+        </Link>
       </div>
     </div>
   );
