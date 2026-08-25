@@ -10,11 +10,11 @@ import {
 
 import { Link } from "react-router-dom";
 import api from "../../services/api";
-import type { Repository } from "../../types/Repositories";
+import type { RepositoryType } from "../../types/Repositories";
 
 export default function Home() {
   const [newRepo, setNewRepo] = useState("");
-  const [repositories, setRepositories] = useState<Repository[]>(() => {
+  const [repositories, setRepositories] = useState<RepositoryType[]>(() => {
     const savedRepositories = localStorage.getItem("repos");
 
     return savedRepositories ? JSON.parse(savedRepositories) : [];
@@ -50,7 +50,7 @@ export default function Home() {
             throw new Error("Repositório já existe na sua lista");
           }
 
-          const data: Repository = {
+          const data: RepositoryType = {
             name: response.data.full_name,
           };
           console.log(data);

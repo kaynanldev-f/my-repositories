@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import api from "../../services/api";
 import { useParams } from "react-router-dom";
-
-export default function Repository({ match }: string) {
-  const [repositorio, setRepositorio] = useState({});
+import { FaCircleNotch } from "react-icons/fa";
+import type { RepositoryDetailsType } from "../../types/Repositories";
+export default function Repository() {
+  const [repositorio, setRepositorio] = useState<RepositoryDetailsType>();
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(false);
   const { repository } = useParams();
@@ -35,9 +36,26 @@ export default function Repository({ match }: string) {
 
     loadingRepo();
   }, [repository]);
+
+  if (!repositorio) {
+    return <FaCircleNotch size={24} className="animate-spin" />;
+  }
+
   return (
-    <div>
-      <h1>Welcome to the Repository Page</h1>
+    <div className="max-w-full flex flex-col items-center justify-center">
+      <div className="rounded-lg bg-[#eee] max-w-[640px] w-full p-10 flex flex-col items-center justify-center">
+        <img
+          src={repositorio.owner.avatar_url || ""}
+          alt={repositorio.description}
+          className="rounded-full w-40 h-40"
+        />
+        <h1 className="text-5xl font-bold text-[#0D2636] mt-6">
+          {repositorio.name}
+        </h1>
+        <p className="text-base text-center mt-4 max-w-3/4 text-[#0D2636]">
+          {repositorio.description}
+        </p>
+      </div>
     </div>
   );
 }
