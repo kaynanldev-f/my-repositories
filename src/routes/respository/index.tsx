@@ -3,7 +3,10 @@ import api from "../../services/api";
 import { useParams, Link } from "react-router-dom";
 import { FaCircleNotch } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
-import type { RepositoryDetailsType } from "../../types/Repositories";
+import type {
+  IssuesType,
+  RepositoryDetailsType,
+} from "../../types/Repositories";
 export default function Repository() {
   const [repositorio, setRepositorio] = useState<RepositoryDetailsType>();
   const [issues, setIssues] = useState([]);
@@ -59,6 +62,40 @@ export default function Repository() {
         <Link to={"/"} className="absolute top-4 left-4">
           <FaArrowLeft size={16} color="#0D2636" />
         </Link>
+
+        <ul className="mt-6 pt-4 border-t-1 border-[#e0e0e0] list-style-none">
+          {issues.map((issue: IssuesType) => (
+            <li key={String(issue.id)} className="flex p-4 mt-4">
+              <img
+                src={issue.user.avatar_url}
+                alt={issue.user.login}
+                className="w-9 h-9 rounded-full border-2 border-[#0D2636]"
+              />
+
+              <div className="flex-1 ml-4">
+                <strong className="text-base">
+                  <a
+                    href={issue.html_url}
+                    className="text-decoration-none text-[#222] transition duration-[0.3s] hover:text-[#0071db]"
+                  >
+                    {issue.title}
+                  </a>
+
+                  {issue.labels.map((label) => (
+                    <span
+                      key={label.id}
+                      className="bg-[#222] text-white rounded-sm text-sm font-bold p-1  ml-3"
+                    >
+                      {label.name}
+                    </span>
+                  ))}
+                </strong>
+
+                <p className="mt-3 text-base text-[#000]">{issue.user.login}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
