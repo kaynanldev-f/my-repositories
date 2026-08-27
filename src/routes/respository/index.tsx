@@ -7,10 +7,12 @@ import type {
   IssuesType,
   RepositoryDetailsType,
 } from "../../types/Repositories";
+import clsx from "clsx";
 export default function Repository() {
   const [repositorio, setRepositorio] = useState<RepositoryDetailsType>();
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
   const { repository } = useParams();
   useEffect(() => {
     async function loadingRepo() {
@@ -31,8 +33,6 @@ export default function Repository() {
         }),
       ]);
 
-      console.log(getRepo.data);
-      console.log(getIssues.data);
       setRepositorio(getRepo.data);
       setIssues(getIssues.data);
       setLoading(false);
@@ -40,6 +40,34 @@ export default function Repository() {
 
     loadingRepo();
   }, [repository]);
+
+  useEffect(() => {
+    async function loadPage() {
+      setLoading(true);
+
+      if (!repository) {
+        return;
+      }
+
+      const nomeRepo = decodeURIComponent(repository);
+
+      const getIssue = await api.get(`/repos/${nomeRepo}/issues`, {
+        params: {
+          state: "open",
+          page: page,
+          per_page: 5,
+        },
+      });
+
+      setIssues(getIssue.data);
+    }
+
+    loadPage();
+  }, [page]);
+
+  function handlePage(actionPage: string) {
+    actionPage === "back" ? setPage(page - 1) : setPage(page + 1);
+  }
 
   if (!repositorio) {
     return <FaCircleNotch size={24} className="animate-spin" />;
@@ -96,6 +124,27 @@ export default function Repository() {
             </li>
           ))}
         </ul>
+
+        <div className="w-full flex items-center justify-end gap-2">
+          <button
+            className={clsx(
+              `bg-[#222] text-white py-1 px-3 rounded-lg hover:opacity-90 transition duration-200`,
+              page < 2 ? "cursor-not-allowed bg-[#808080]" : "cursor-pointer",
+            )}
+            disabled={page < 2}
+            type="button"
+            onClick={() => handlePage("back")}
+          >
+            Voltar
+          </button>
+          <button
+            className="bg-[#222] text-white py-1 px-3 rounded-lg hover:opacity-90 transition duration-200 cursor-pointer"
+            type="button"
+            onClick={() => handlePage("")}
+          >
+            Proximo
+          </button>
+        </div>
       </div>
     </div>
   );
