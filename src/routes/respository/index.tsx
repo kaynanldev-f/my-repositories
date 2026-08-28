@@ -13,6 +13,7 @@ export default function Repository() {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [stateIssue, setStateIssue] = useState("all");
   const { repository } = useParams();
   useEffect(() => {
     async function loadingRepo() {
@@ -53,7 +54,7 @@ export default function Repository() {
 
       const getIssue = await api.get(`/repos/${nomeRepo}/issues`, {
         params: {
-          state: "open",
+          state: stateIssue,
           page: page,
           per_page: 5,
         },
@@ -63,10 +64,15 @@ export default function Repository() {
     }
 
     loadPage();
-  }, [page]);
+  }, [page, repositorio, stateIssue]);
 
   function handlePage(actionPage: string) {
     actionPage === "back" ? setPage(page - 1) : setPage(page + 1);
+  }
+
+  function handleStateIssue(state: string) {
+    setStateIssue(state);
+    setPage(1);
   }
 
   if (!repositorio) {
@@ -91,7 +97,30 @@ export default function Repository() {
           <FaArrowLeft size={16} color="#0D2636" />
         </Link>
 
-        <ul className="mt-6 pt-4 border-t-1 border-[#e0e0e0] list-style-none">
+        <div className="w-full flex justify-start gap-2 mt-8">
+          <button
+            className="border-2 border-[#222] text-[#222] text-xs py-1 px-3 rounded-lg hover:opacity-90 transition duration-200 cursor-pointer"
+            type="button"
+            onClick={() => handleStateIssue("all")}
+          >
+            All
+          </button>
+          <button
+            className="border-2 border-[#222] text-[#222] text-xs py-1 px-3 rounded-lg hover:opacity-90 transition duration-200 cursor-pointer"
+            type="button"
+            onClick={() => handleStateIssue("open")}
+          >
+            Open
+          </button>
+          <button
+            className="border-2 border-[#222] text-[#222] text-xs py-1 px-3 rounded-lg hover:opacity-90 transition duration-200 cursor-pointer"
+            type="button"
+            onClick={() => handleStateIssue("closed")}
+          >
+            Close
+          </button>
+        </div>
+        <ul className="mt-2 pt-4 border-t-1 border-[#e0e0e0] list-style-none">
           {issues.map((issue: IssuesType) => (
             <li key={String(issue.id)} className="flex p-4 mt-4">
               <img
