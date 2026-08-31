@@ -1,77 +1,159 @@
-# React + TypeScript + Vite
+📚 My Repositories
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web desenvolvida para consultar e visualizar informações de repositórios do GitHub de forma simples, rápida e organizada.
 
-Currently, two official plugins are available:
+🔗 Projeto online: https://my-repositories-qqbl.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+📌 Sobre o projeto
 
-## React Compiler
+O My Repositories é uma aplicação que utiliza a API do GitHub para buscar informações de repositórios e apresentar seus dados de maneira intuitiva.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+O projeto foi desenvolvido com foco em praticar conceitos de desenvolvimento Front-end, consumo de APIs, gerenciamento de estados, rotas e construção de interfaces responsivas.
 
-Note: This will impact Vite dev & build performances.
+🚀 Funcionalidades
+🔎 Busca e consulta de repositórios do GitHub
+📁 Listagem de repositórios
+📄 Visualização de informações detalhadas do repositório
+🐛 Consulta de issues
+🔗 Acesso ao repositório diretamente pelo GitHub
+📱 Interface responsiva
+⏳ Estados de carregamento
+⚠️ Tratamento de erros durante as requisições
+🔄 Paginação de resultados
+🛠️ Tecnologias utilizadas
 
-## Expanding the ESLint configuration
+O projeto foi desenvolvido utilizando tecnologias modernas do ecossistema Front-end:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+React
+TypeScript
+Vite
+Axios
+React Router
+Tailwind CSS
+Git e GitHub
+Vercel
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+🔌 Consumo da API
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+A aplicação utiliza a GitHub REST API para obter os dados dos repositórios.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Entre as informações que podem ser consultadas estão:
 
-```
+Nome do repositório
+Descrição
+Proprietário
+Avatar do proprietário
+URL do repositório
+Issues
+Estado das issues
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+A utilização de uma API externa permite que os dados sejam carregados dinamicamente, sem necessidade de manter uma base de dados própria para os repositórios.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+🔄 Fluxo da aplicação
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+O funcionamento principal pode ser representado da seguinte forma:
 
-```
+Usuário
+↓
+Pesquisa/seleciona um repositório
+↓
+Aplicação realiza uma requisição HTTP
+↓
+GitHub API
+↓
+Dados retornados
+↓
+Componentes React
+↓
+Informações exibidas na interface
+🎯 Objetivos do projeto
+
+O projeto teve como principais objetivos:
+
+Praticar desenvolvimento com React e TypeScript.
+Aprender a consumir APIs REST.
+Trabalhar com requisições HTTP utilizando Axios.
+Criar interfaces reutilizáveis através de componentes.
+Trabalhar com rotas e parâmetros dinâmicos.
+Implementar paginação.
+Trabalhar com estados de carregamento e erro.
+Desenvolver uma aplicação responsiva.
+Realizar deploy de uma aplicação Front-end.
+💻 Como executar o projeto
+
+1. Clone o repositório
+   git clone URL_DO_SEU_REPOSITORIO
+2. Entre na pasta
+   cd nome-do-projeto
+3. Instale as dependências
+   npm install
+4. Execute o projeto
+   npm run dev
+
+A aplicação ficará disponível no endereço informado pelo Vite, normalmente:
+
+http://localhost:5173
+📦 Build
+
+Para gerar a versão de produção:
+
+npm run build
+
+Para visualizar a versão de produção localmente:
+
+npm run preview
+☁️ Deploy
+
+O projeto está publicado utilizando a Vercel.
+
+A Vercel permite integração com repositórios Git e pode realizar novos deployments automaticamente a partir de alterações enviadas ao repositório.
+
+📱 Responsividade
+
+A interface foi desenvolvida pensando em diferentes tamanhos de tela, proporcionando uma experiência adequada em:
+
+💻 Desktop
+💻 Notebook
+📱 Tablet
+📱 Smartphone
+🧠 Principais aprendizados
+
+Durante o desenvolvimento foram trabalhados conceitos importantes como:
+
+Componentização com React
+Tipagem com TypeScript
+Hooks
+React Router
+Parâmetros de URL
+Consumo de APIs REST
+Axios
+Tratamento de estados assíncronos
+Paginação
+Tratamento de erros
+Responsividade
+Organização de código
+Deploy com Vercel
+🔮 Possíveis melhorias
+
+Algumas funcionalidades que podem ser adicionadas futuramente:
+
+⭐ Favoritar repositórios
+🔐 Autenticação com GitHub
+🔎 Filtros avançados
+🌙 Dark Mode
+📊 Dashboard com estatísticas
+🔔 Notificações
+💾 Persistência de repositórios favoritos
+🧪 Testes automatizados
+⚡ Otimização de cache das requisições
+👨‍💻 Autor
+
+Kaynan Teixeira
+
+Desenvolvedor Front-end focado em criar interfaces modernas, responsivas e funcionais.
+
+Tecnologias
+
+HTML CSS JavaScript TypeScript React Next.js Tailwind CSS
+
+⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório!
