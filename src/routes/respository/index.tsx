@@ -160,7 +160,7 @@ export default function Repository() {
               `bg-[#222] text-white py-1 px-3 rounded-lg hover:opacity-90 transition duration-200`,
               page < 2 ? "cursor-not-allowed bg-[#808080]" : "cursor-pointer",
             )}
-            disabled={page < 2}
+            disabled={page < 2 || loading === true}
             type="button"
             onClick={() => handlePage("back")}
           >
